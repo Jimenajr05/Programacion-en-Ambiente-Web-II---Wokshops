@@ -1,0 +1,20 @@
+{
+  "name": "week-4",
+  "version": "1.0.0",
+  "description": "Semana 4 del curso de ISW-711",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index.js",
+    "start": "node index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^17.2.3",
+    "express": "^4.22.1",
+    "mongoose": "^9.1.5",
+    "nodemon": "^2.0.22"
+  }
+}
