@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 400px;
+            margin: 40px auto;
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin: 6px 0;
+        }
+        pre {
+            background: #f4f4f4;
+            padding: 10px;
+        }
+    </style>
+
+    <script>
+        const API_BASE = "http://localhost:3001";
+
+        function showResult(data) {
+            document.getElementById("result").textContent =
+                JSON.stringify(data, null, 2);
+        }
+
+        async function register(event) {
+            event.preventDefault();
+
+            const name = document.getElementById("name").value.trim();
+            const lastName = document.getElementById("lastName").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const password = document.getElementById("password").value;
+
+            if (!name || !lastName || !email || !password) {
+                showResult({ error: "All fields are required" });
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/register`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ name, lastName, email, password })
+                });
+
+                const data = await response.json();
+
+                showResult(data);
+
+                if (response.ok) {
+                    alert("User registered successfully");
+                }
+
+            } catch (error) {
+                showResult({ error: "Cannot connect to API" });
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            document
+                .getElementById("registerForm")
+                .addEventListener("submit", register);
+        });
+    </script>
+</head>
+
+<body>
+
+    <h2>Register</h2>
+
+    <form id="registerForm">
+        <label>Name</label>
+        <input id="name" type="text" placeholder="Your name" required>
+
+        <label>Last Name</label>
+        <input id="lastName" type="text" placeholder="Your last name">
+
+        <label>Email</label>
+        <input id="email" type="email" placeholder="email@example.com" required>
+
+        <label>Password</label>
+        <input id="password" type="password" placeholder="********" required>
+
+        <button type="submit">Register</button>
+        <button type="button" onclick="location.href='login.html'">Ir a Login</button>
+    </form>
+
+    <h3>Result</h3>
+    <pre id="result"></pre>
+
+</body>
+</html>
